@@ -55,12 +55,14 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
     private static final String RECENT_MENU_CLEAR_ALL = "recent_menu_clear_all";
     private static final String RECENT_MENU_CLEAR_ALL_LOCATION = "recent_menu_clear_all_location";
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
+    private static final String POWER_MENU_SCREENSHOT = "power_menu_screenshot";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mRecentClearAll;
     private ListPreference mRecentClearAllPosition;
     private CheckBoxPreference mStatusBarNetworkActivity;
+    private CheckBoxPreference mScreenshotPowerMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +105,11 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
         mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
             Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
          mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
+
+        mScreenshotPowerMenu = (CheckBoxPreference) prefSet.findPreference(POWER_MENU_SCREENSHOT);
+        mScreenshotPowerMenu.setChecked(Settings.System.getInt(resolver,
+                Settings.System.SCREENSHOT_IN_POWER_MENU, 0) == 1);
+        mScreenshotPowerMenu.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -128,6 +135,9 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                 Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
+        } else if (preference == mScreenshotPowerMenu) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver, Settings.System.SCREENSHOT_IN_POWER_MENU, value ? 1 : 0);
         } else {
             return false;
         }
@@ -135,4 +145,3 @@ public class BarsAndMenusSettings extends SettingsPreferenceFragment implements
         return true;
     }
 }
-
