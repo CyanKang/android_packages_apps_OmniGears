@@ -32,10 +32,14 @@
  */
 package org.omnirom.omnigears;
 
+import java.util.prefs.PreferenceChangeListener;
+
 import android.content.ContentResolver;
 import android.content.res.Resources;
+import android.media.AudioSystem;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
@@ -66,6 +70,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
     private static final String CATEGORY_APPSWITCH = "button_keys_appSwitch";
     
     private static final String BUTTON_VOLUME_WAKE = "button_volume_wake_screen";
+    private static final String BUTTON_VOLUME_DEFAULT = "button_volume_default_screen";
 
     private static final String KEYS_CATEGORY_BINDINGS = "keys_bindings";
     private static final String KEYS_ENABLE_CUSTOM = "keys_enable_custom";
@@ -115,6 +120,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
     private Map<String, Integer> mKeySettings = new HashMap<String, Integer>();
+    private ListPreference mVolumeDefault;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,13 +136,25 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
 
         if (hasVolumeRocker()) {
+            mVolumeWake = (CheckBoxPreference) findPreference(BUTTON_VOLUME_WAKE);
+            mVolumeDefault = (ListPreference) findPreference(BUTTON_VOLUME_DEFAULT);
             if (!res.getBoolean(R.bool.config_show_volumeRockerWake)) {
-                prefScreen.removePreference(volumeCategory);
+                prefScreen.removePreference(mVolumeWake);
             } else {
-                mVolumeWake = (CheckBoxPreference) findPreference(BUTTON_VOLUME_WAKE);
                 mVolumeWake.setChecked(Settings.System.getInt(resolver,
-                        Settings.System.VOLUME_WAKE_SCREEN, 0) != 0);
+                    Settings.System.VOLUME_WAKE_SCREEN, 0) != 0);
             }
+            String currentDefault = Settings.System.getString(resolver, Settings.System.VOLUME_KEYS_DEFAULT);
+
+            if (!Utils.isVoiceCapable(getActivity())) {
+                removeListEntry(mVolumeDefault, String.valueOf(AudioSystem.STREAM_RING));
+            }
+
+            if (currentDefault == null) {
+                currentDefault = mVolumeDefault.getEntryValues()[mVolumeDefault.getEntryValues().length - 1].toString();
+            }
+            mVolumeDefault.setValue(currentDefault);
+            mVolumeDefault.setOnPreferenceChangeListener(this);
         } else {
             prefScreen.removePreference(volumeCategory);
         }
@@ -168,7 +186,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             prefScreen.removePreference(keysHomeCategory);
             prefScreen.removePreference(keysMenuCategory);
             prefScreen.removePreference(keysAssistCategory);
-            prefScreen.removePreference(keysAppSwitchCategory);           
+            prefScreen.removePreference(keysAppSwitchCategory);
         } else {
             mEnableCustomBindings = (SwitchPreference) prefScreen.findPreference(
                     KEYS_ENABLE_CUSTOM);
@@ -348,7 +366,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             boolean checked = ((CheckBoxPreference)preference).isChecked();
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.VOLUME_WAKE_SCREEN, checked ? 1:0);
-
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -470,6 +487,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             mKeySettings.put(Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, value);
             checkForHomeKey();
             return true;
+        } else if (preference == mVolumeDefault) {
+            String value = (String)newValue;
+            Settings.System.putString(getActivity().getContentResolver(), Settings.System.VOLUME_KEYS_DEFAULT, value);
+            return true;
         }
         return false;
     }
@@ -503,5 +524,22 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+    }
+
+    public void removeListEntry(ListPreference list, String valuetoRemove) {
+        ArrayList<CharSequence> entries = new ArrayList<CharSequence>();
+        ArrayList<CharSequence> values = new ArrayList<CharSequence>();
+
+        for (int i = 0; i < list.getEntryValues().length; i++) {
+            if (list.getEntryValues()[i].toString().equals(valuetoRemove)) {
+                continue;
+            } else {
+                entries.add(list.getEntries()[i]);
+                values.add(list.getEntryValues()[i]);
+            }
+        }
+
+        list.setEntries(entries.toArray(new CharSequence[entries.size()]));
+        list.setEntryValues(values.toArray(new CharSequence[values.size()]));
     }
 }
