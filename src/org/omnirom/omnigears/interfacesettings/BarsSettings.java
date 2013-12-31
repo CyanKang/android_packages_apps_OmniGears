@@ -75,6 +75,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
         mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
         mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
+
     }
 
     @Override
