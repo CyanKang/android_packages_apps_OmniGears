@@ -371,4 +371,8 @@
     <!-- Screen-On Notification Light -->
     <string name="screen_on_notification_led_title">Screen-On Notification Light</string>
     <string name="screen_on_notification_led_summary">Enable Notification Light even when screen is on</string> 
+
+    <!-- QuickSettings: Dynamic Row -->
+    <string name="qs_configurable_title">QuickSettings configurable</string>
+    <string name="qs_configurable_summary">Enable/disable dynamic row changes</string>
 </resources>
