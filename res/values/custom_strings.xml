@@ -370,17 +370,4 @@
     <string name="icon_picker_sms">Messaging</string>
     <string name="icon_picker_twitter">Twitter</string>
 
-    <!-- QuickSettings: Quick Pulldown -->
-    <string name="title_quick_pulldown">Quick pulldown</string>
-    <string name="summary_quick_pulldown">Quickly pulldown quicksettings with one finger</string>
-    <string name="quick_pulldown_off">Off</string>
-    <string name="quick_pulldown_centre">Centre</string>
-    <string name="quick_pulldown_left">Left</string>
-    <string name="quick_pulldown_right">Right</string>
-
-    <!-- Cursor control -->
-    <string name="volume_key_cursor_control_title">Cursor control</string>
-    <string name="volume_key_cursor_control_on">Left/right</string>
-    <string name="volume_key_cursor_control_on_reverse">Right/left</string>
-
 </resources>
