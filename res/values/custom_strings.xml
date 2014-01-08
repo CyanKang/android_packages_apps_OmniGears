@@ -24,6 +24,7 @@
     <string name="bars_and_menus_settings">Bars and menus</string>
     <string name="active_display_settings">ActiveDisplay</string>
     <string name="bars_and_menus_category_status_bar_title">Status bar</string>
+    <string name="lockscreen_settings">Lockscreen</string>
     <string name="status_bar_battery_title">Battery style</string>
     <string name="status_bar_toggle_brightness">Brightness control</string>
     <string name="status_bar_toggle_brightness_summary">Adjust brightness by sliding across status bar</string>
@@ -375,4 +376,9 @@
     <!-- QuickSettings: Dynamic Row -->
     <string name="qs_configurable_title">QuickSettings configurable</string>
     <string name="qs_configurable_summary">Enable/disable dynamic row changes</string>
+
+    <!-- Lockscreen -->
+    <string name="lockscreen_see_through_title">See through</string>
+    <string name="lockscreen_see_through_summary">Shows the content behind your lockscreen, your data may be visible to those around you</string>
+
 </resources>
