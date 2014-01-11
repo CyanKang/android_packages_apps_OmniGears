@@ -37,10 +37,8 @@ public class NotificationPanelSettings extends SettingsPreferenceFragment implem
     private static final String TAG = "NotificationPanelSettings";
 
     private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
-    private static final String QUICK_SWIPE = "quick_swipe";
 
     private CheckBoxPreference mStatusBarCustomHeader;
-    private CheckBoxPreference mQuickSwipe;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,11 +52,6 @@ public class NotificationPanelSettings extends SettingsPreferenceFragment implem
         mStatusBarCustomHeader.setChecked(Settings.System.getInt(resolver,
             Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1);
         mStatusBarCustomHeader.setOnPreferenceChangeListener(this);
-
-        mQuickSwipe = (CheckBoxPreference) prefSet.findPreference(QUICK_SWIPE);
-        mQuickSwipe.setChecked(Settings.System.getInt(resolver,
-            Settings.System.QUICK_SWIPE, 1) == 1);
-        mQuickSwipe.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -72,13 +65,10 @@ public class NotificationPanelSettings extends SettingsPreferenceFragment implem
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                 Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
-        } else if (preference == mQuickSwipe) {
-            boolean value = (Boolean) objValue;
-            Settings.System.putInt(resolver,
-                Settings.System.QUICK_SWIPE, value ? 1 : 0);
         } else {
             return false;
         }
+
         return true;
     }
 }
