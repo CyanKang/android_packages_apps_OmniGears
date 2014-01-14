@@ -46,7 +46,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
     private static final String QUICK_PULLDOWN = "quick_pulldown";
     private static final String SMART_PULLDOWN = "smart_pulldown";
-    private static final String QUICKSETTINGS_DYNAMIC = "quicksettings_dynamic_row";
 
     // Device types
     private static final int DEVICE_PHONE  = 0;
@@ -56,7 +55,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mStatusBarNetworkActivity;
-    private CheckBoxPreference mQuickSettingsDynamic;
     private ListPreference mQuickPulldown;
     private ListPreference mSmartPulldown;
 
@@ -73,8 +71,8 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarBrightnessControl.setOnPreferenceChangeListener(this);
 
         try {
-            if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
+            if (Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS_MODE)
+                    == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
                 mStatusBarBrightnessControl.setEnabled(false);
                 mStatusBarBrightnessControl.setSummary(R.string.status_bar_toggle_info);
             }
@@ -111,10 +109,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             prefSet.removePreference(mSmartPulldown);
         }
 
-        mQuickSettingsDynamic = (CheckBoxPreference) prefSet.findPreference(QUICKSETTINGS_DYNAMIC);
-        mQuickSettingsDynamic.setChecked(Settings.System.getInt(resolver,
-            Settings.System.QUICK_SETTINGS_TILES_ROW, 1) != 0);
-        mQuickSettingsDynamic.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -128,18 +122,15 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         ContentResolver resolver = getActivity().getContentResolver();
         if (preference == mStatusBarBrightnessControl) {
             boolean value = (Boolean) objValue;
-            Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
+                    value ? 1 : 0);
         } else if (preference == mStatusBarNotifCount) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
         } else if (preference == mStatusBarNetworkActivity) {
             boolean value = (Boolean) objValue;
-            Settings.System.putInt(resolver,
-                Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
-        } else if (preference == mQuickSettingsDynamic) {
-            boolean value = (Boolean) objValue;
-            Settings.System.putInt(resolver,
-                Settings.System.QUICK_SETTINGS_TILES_ROW, value ? 1 : 0);
+            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NETWORK_ACTIVITY,
+                    value ? 1 : 0);
         } else if (preference == mQuickPulldown) {
             int quickPulldown = Integer.valueOf((String) objValue);
             Settings.System.putInt(resolver, Settings.System.QS_QUICK_PULLDOWN,
