@@ -39,10 +39,12 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
+    private static final String QUICKSETTINGS_DYNAMIC = "quicksettings_dynamic_row";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
     private CheckBoxPreference mStatusBarNetworkActivity;
+    private CheckBoxPreference mQuickSettingsDynamic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,12 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarNetworkActivity.setChecked(Settings.System.getInt(resolver,
             Settings.System.STATUS_BAR_NETWORK_ACTIVITY, 0) == 1);
         mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
+        mStatusBarNetworkActivity.setOnPreferenceChangeListener(this);
 
+        mQuickSettingsDynamic = (CheckBoxPreference) prefSet.findPreference(QUICKSETTINGS_DYNAMIC);
+        mQuickSettingsDynamic.setChecked(Settings.System.getInt(resolver,
+            Settings.System.QUICK_SETTINGS_TILES_ROW, 1) != 0);
+        mQuickSettingsDynamic.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -93,8 +100,12 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
         } else if (preference == mStatusBarNetworkActivity) {
             boolean value = (Boolean) objValue;
-            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NETWORK_ACTIVITY,
-                    value ? 1 : 0);
+            Settings.System.putInt(resolver,
+                Settings.System.STATUS_BAR_NETWORK_ACTIVITY, value ? 1 : 0);
+        } else if (preference == mQuickSettingsDynamic) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver,
+                Settings.System.QUICK_SETTINGS_TILES_ROW, value ? 1 : 0);
         } else {
             return false;
         }
