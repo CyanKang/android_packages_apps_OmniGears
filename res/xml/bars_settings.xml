@@ -42,6 +42,22 @@
                 android:summary="@string/show_activity_indicators_on_status_bar_summary"
                 android:persistent="false"/>
 
+        <ListPreference
+                android:key="quick_pulldown"
+                android:title="@string/title_quick_pulldown"
+                android:summary="@string/summary_quick_pulldown"
+                android:entries="@array/quick_pulldown_entries"
+                android:entryValues="@array/quick_pulldown_values"
+                android:persistent="false" />
+
+        <ListPreference
+                android:key="smart_pulldown"
+                android:title="@string/smart_pulldown_title"
+                android:summary="@string/smart_pulldown_summary"
+                android:entries="@array/smart_pulldown_entries"
+                android:entryValues="@array/smart_pulldown_values"
+                android:persistent="false" />
+
         <CheckBoxPreference
                 android:key="quicksettings_dynamic_row"
                 android:title="@string/qs_configurable_title"

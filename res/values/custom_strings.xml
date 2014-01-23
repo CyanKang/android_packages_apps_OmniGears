@@ -365,10 +365,6 @@
     <string name="icon_picker_sms">Messaging</string>
     <string name="icon_picker_twitter">Twitter</string>
 
-    <!-- Status Bar QS Quick pulldown -->
-    <string name="qs_quick_pulldown_title">Quick Settings pulldown</string>
-    <string name="qs_quick_pulldown_summary">Access Quick Settings by pulling down on the right side of the status bar</string>
-
     <!-- Screen-On Notification Light -->
     <string name="screen_on_notification_led_title">Screen-On Notification Light</string>
     <string name="screen_on_notification_led_summary">Enable Notification Light even when screen is on</string> 
@@ -381,4 +377,22 @@
     <string name="lockscreen_see_through_title">See through</string>
     <string name="lockscreen_see_through_summary">Shows the content behind your lockscreen, your data may be visible to those around you</string>
 
+    <!-- QuickSettings: Quick Pulldown -->
+    <string name="title_quick_pulldown">Quick pulldown</string>
+    <string name="summary_quick_pulldown">Quickly pulldown quicksettings with one finger</string>
+    <string name="quick_pulldown_off">Off</string>
+    <string name="quick_pulldown_centre">Centre</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
+
+    <!-- QuickSettings: Smart Pulldown -->
+    <string name="smart_pulldown_title">Smart pulldown</string>
+    <string name="smart_pulldown_summary">Open Quick Settings when there are no notifications present</string>
+    <string name="smart_pulldown_off">Off</string>
+    <string name="smart_pulldown_dismissable">Pulldown if there are no cleareable notifications</string>
+    <string name="smart_pulldown_persistent">Pulldown if there are no notifications</string>
+
+    <!-- Quick Swipe -->
+    <string name="quick_swipe_title">Quick swipe</string>
+    <string name="quick_swipe_summary">Quickly swipe between quick settings and notification drawer</string>
 </resources>
