@@ -50,6 +50,12 @@
             android:persistent="false"/>
 
     <CheckBoxPreference
+            android:key="power_menu_profiles"
+            android:title="@string/power_menu_toggle_profiles_title"
+            android:summary="@string/power_menu_toggle_profiles_summary"
+            android:persistent="false"/>
+
+    <CheckBoxPreference
             android:key="power_menu_sound_toggles"
             android:title="@string/power_menu_toggle_sound_toggles_title"
             android:summary="@string/power_menu_toggle_sound_toggles_summary"

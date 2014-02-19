@@ -41,6 +41,7 @@ public class MenusSettings extends SettingsPreferenceFragment implements
     private static final String POWER_MENU_CATEGORY = "category_power_menu";
     private static final String POWER_MENU_SCREENSHOT = "power_menu_screenshot";
     private static final String POWER_MENU_SCREENRECORD = "power_menu_screenrecord";
+    private static final String POWER_MENU_PROFILES = "power_menu_profiles";
     private static final String POWER_MENU_MOBILE_DATA = "power_menu_mobile_data";
     private static final String POWER_MENU_AIRPLANE_MODE = "power_menu_airplane_mode";
     private static final String POWER_MENU_SOUND_TOGGLES = "power_menu_sound_toggles";
@@ -48,6 +49,7 @@ public class MenusSettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mScreenshotPowerMenu;
     private CheckBoxPreference mScreenrecordPowerMenu;
+    private CheckBoxPreference mProfilesPowerMenu;
     private CheckBoxPreference mMobileDataPowerMenu;
     private CheckBoxPreference mAirplaneModePowerMenu;
     private CheckBoxPreference mSoundTogglesPowerMenu;
@@ -65,11 +67,16 @@ public class MenusSettings extends SettingsPreferenceFragment implements
                 Settings.System.SCREENSHOT_IN_POWER_MENU, 0) == 1);
         mScreenshotPowerMenu.setOnPreferenceChangeListener(this);
 
+        mProfilesPowerMenu = (CheckBoxPreference) prefSet.findPreference(POWER_MENU_PROFILES);
+        mProfilesPowerMenu.setChecked(Settings.System.getInt(resolver,
+                Settings.System.PROFILES_IN_POWER_MENU, 0) == 1);
+        mProfilesPowerMenu.setOnPreferenceChangeListener(this);
+
         mMobileDataPowerMenu = (CheckBoxPreference) prefSet.findPreference(POWER_MENU_MOBILE_DATA);
         Context context = getActivity();
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)) {
+        if (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)) {
             mMobileDataPowerMenu.setChecked(Settings.System.getInt(resolver,
                 Settings.System.MOBILE_DATA_IN_POWER_MENU, 0) == 1);
             mMobileDataPowerMenu.setOnPreferenceChangeListener(this);
@@ -111,6 +118,9 @@ public class MenusSettings extends SettingsPreferenceFragment implements
         } else if (preference == mScreenrecordPowerMenu) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.SCREENRECORD_IN_POWER_MENU, value ? 1 : 0);
+        } else if (preference == mProfilesPowerMenu) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver, Settings.System.PROFILES_IN_POWER_MENU, value ? 1 : 0);
         } else if (preference == mMobileDataPowerMenu) {
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver, Settings.System.MOBILE_DATA_IN_POWER_MENU, value ? 1 : 0);
