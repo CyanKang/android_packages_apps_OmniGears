@@ -184,8 +184,7 @@ public class StatusBarClockStyle extends SettingsPreferenceFragment
             if ((String) newValue != null) {
                 Settings.System.putString(getActivity().getContentResolver(),
                         Settings.System.STATUSBAR_CLOCK_DATE_FORMAT, (String) newValue);
-                int idx = mClockDateFormat.findIndexOfValue((String) newValue);
-                mClockDateFormat.setSummary(mClockDateFormat.getEntries()[idx]);
+            mClockDateFormat.setSummary(mClockDateFormat.getEntry());
             }
             return true;
         }
@@ -199,19 +198,25 @@ public class StatusBarClockStyle extends SettingsPreferenceFragment
         parsedDateEntries = new String[dateEntries.length];
         Date now = new Date();
 
+        int lastEntry = dateEntries.length - 1;
         int dateFormat = Settings.System.getInt(getActivity()
                 .getContentResolver(), Settings.System.STATUSBAR_CLOCK_DATE_STYLE, 2);
         for (int i = 0; i < dateEntries.length; i++) {
-            String newDate;
-            CharSequence dateString = DateFormat.format(dateEntries[i], now);
-            if (dateFormat == CLOCK_DATE_STYLE_LOWERCASE) {
-               newDate = dateString.toString().toLowerCase();
-            } else if (dateFormat == CLOCK_DATE_STYLE_UPPERCASE) {
-               newDate = dateString.toString().toUpperCase();
+            if (i == lastEntry) {
+                parsedDateEntries[i] = dateEntries[i];
             } else {
-               newDate = dateString.toString();
+                String newDate;
+                CharSequence dateString = DateFormat.format(dateEntries[i], now);
+                if (dateFormat == CLOCK_DATE_STYLE_LOWERCASE) {
+                    newDate = dateString.toString().toLowerCase();
+                } else if (dateFormat == CLOCK_DATE_STYLE_UPPERCASE) {
+                    newDate = dateString.toString().toUpperCase();
+                } else {
+                    newDate = dateString.toString();
+                }
+
+                parsedDateEntries[i] = newDate;
             }
-            parsedDateEntries[i] = newDate;
         }
         mClockDateFormat.setEntries(parsedDateEntries);
     }
