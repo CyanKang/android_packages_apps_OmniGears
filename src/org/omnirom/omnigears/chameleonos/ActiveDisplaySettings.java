@@ -34,7 +34,7 @@ import android.text.TextUtils;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 
-import com.android.internal.util.omni.DeviceUtils;
+import com.android.internal.util.slim.DeviceUtils;
 
 import java.util.Arrays;
 import java.util.HashSet;
