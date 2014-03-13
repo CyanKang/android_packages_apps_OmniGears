@@ -37,16 +37,14 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.android.internal.widget.LockPatternUtils;
+
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.omnirom.omnigears.chameleonos.SeekBarPreference;
-
-public class LockscreenSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class LockscreenSettings extends SettingsPreferenceFragment {
     private static final String TAG = "LockscreenSettings";
 
     private LockPatternUtils mLockPatternUtils;
@@ -55,12 +53,10 @@ public class LockscreenSettings extends SettingsPreferenceFragment implements
     private static final String KEY_MAXIMIZE_WIDGETS = "maximize_widgets";
     private static final String KEY_ENABLE_CAMERA = "enable_camera";
     private static final String BATTERY_AROUND_LOCKSCREEN_RING = "battery_around_lockscreen_ring";
-    private static final String KEY_BLUR_RADIUS = "lockscreen_blur_radius";
 
     private CheckBoxPreference mMaximizeWidgets;
     private CheckBoxPreference mEnableCameraWidget;
     private CheckBoxPreference mLockRingBattery;
-    private SeekBarPreference mBlurRadius;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,22 +101,6 @@ public class LockscreenSettings extends SettingsPreferenceFragment implements
             mEnableCameraWidget.setChecked(Settings.System.getInt(resolver,
                     Settings.System.LOCKSCREEN_ENABLE_CAMERA, 1) == 1);
         }
-
-        // Lockscreen Blur
-        mBlurRadius = (SeekBarPreference) findPreference(KEY_BLUR_RADIUS);
-        mBlurRadius.setValue(Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_BLUR_RADIUS, 12));
-        mBlurRadius.setOnPreferenceChangeListener(this);
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
-        ContentResolver resolver = getActivity().getContentResolver();
-        if (preference == mBlurRadius) {
-            Settings.System.putInt(resolver,
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS, (Integer) objValue);
-        }
-        return true;
     }
 
     @Override
