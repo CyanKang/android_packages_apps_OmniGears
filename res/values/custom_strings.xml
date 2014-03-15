@@ -226,6 +226,8 @@
     <string name="power_menu_toggle_airplane_mode_summary">Show airplane option in power menu</string>
     <string name="power_menu_toggle_sound_toggles_title">Sound toggles</string>
     <string name="power_menu_toggle_sound_toggles_summary">Show sound toggles in power menu</string>
+    <string name="power_menu_toggle_onthego_title">On-the-go</string>
+    <string name="power_menu_toggle_onthego_summary">Show on-the-go option in power menu</string>
 
     <!-- Active Display Notifications -->
     <string name="ad_settings_title">Active display</string>
