@@ -34,7 +34,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.net.ConnectivityManager;
 
-import com.android.internal.util.omni.DeviceUtils;
+import com.android.internal.util.slim.DeviceUtils;
 import org.omnirom.omnigears.preference.SystemCheckBoxPreference;
 
 public class MenusSettings extends SettingsPreferenceFragment implements
@@ -57,6 +57,7 @@ public class MenusSettings extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.menus_settings);
 
         PreferenceScreen prefSet = getPreferenceScreen();
+        resolver = getActivity().getContentResolver();
         mContext = getActivity().getApplicationContext();
 
         mMobileDataPowerMenu = (SystemCheckBoxPreference) prefSet.findPreference(POWER_MENU_MOBILE_DATA);
