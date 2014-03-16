@@ -35,6 +35,7 @@ import android.util.Log;
 import android.net.ConnectivityManager;
 
 import com.android.internal.util.slim.DeviceUtils;
+import com.android.internal.util.nameless.NamelessUtils;
 import org.omnirom.omnigears.preference.SystemCheckBoxPreference;
 
 public class MenusSettings extends SettingsPreferenceFragment implements
@@ -74,6 +75,11 @@ public class MenusSettings extends SettingsPreferenceFragment implements
         if (!mContext.getResources().getBoolean(com.android.internal.R.bool.config_enableScreenrecordChord)) {
             prefSet.removePreference(mScreenrecordPowerMenu);
         }
+
+        findPreference(Settings.System.POWER_MENU_ONTHEGO_ENABLED).setEnabled(
+                NamelessUtils.hasCamera(getActivity())
+        );
+
     }
 
     @Override
