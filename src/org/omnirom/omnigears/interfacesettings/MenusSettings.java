@@ -47,6 +47,7 @@ public class MenusSettings extends SettingsPreferenceFragment implements
     private static final String POWER_MENU_SCREENRECORD = "screenrecord_in_power_menu";
     private static final String POWER_MENU_MOBILE_DATA = "mobile_data_in_power_menu";
     private static final String POWER_MENU_PROFILES = "power_menu_profiles";
+    private static final String POWER_MENU_ONTHEGO_ENABLED = "power_menu_onthego_enabled";
 
     private SystemCheckBoxPreference mScreenrecordPowerMenu;
     private SystemCheckBoxPreference mMobileDataPowerMenu;
@@ -76,10 +77,10 @@ public class MenusSettings extends SettingsPreferenceFragment implements
             prefSet.removePreference(mScreenrecordPowerMenu);
         }
 
-        findPreference(Settings.System.POWER_MENU_ONTHEGO_ENABLED).setEnabled(
-                NamelessUtils.hasCamera(getActivity())
-        );
-
+        mOnTheGoPowerMenu = (SystemCheckBoxPreference) prefSet.findPreference(POWER_MENU_ONTHEGO_ENABLED);
+        if (!NamelessUtils.hasCamera(getActivity())) {
+            prefSet.removePreference(mOnTheGoPowerMenu);
+        }
     }
 
     @Override
