@@ -51,6 +51,7 @@ public class MenusSettings extends SettingsPreferenceFragment implements
 
     private SystemCheckBoxPreference mScreenrecordPowerMenu;
     private SystemCheckBoxPreference mMobileDataPowerMenu;
+    private SystemCheckBoxPreference mOnTheGoPowerMenu;
     private CheckBoxPreference mProfilesPowerMenu;
 
     @Override
