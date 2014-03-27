@@ -23,15 +23,20 @@ import com.android.settings.R;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
+import android.view.WindowManagerGlobal;
+
 import android.net.ConnectivityManager;
 
 import com.android.internal.util.slim.DeviceUtils;
@@ -39,7 +44,7 @@ import com.android.internal.util.nameless.NamelessUtils;
 import org.omnirom.omnigears.preference.SystemCheckBoxPreference;
 
 public class MenusSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+        OnPreferenceChangeListener {
     private static final String TAG = "MenusSettings";
     private ContentResolver resolver;
 
@@ -52,7 +57,7 @@ public class MenusSettings extends SettingsPreferenceFragment implements
     private SystemCheckBoxPreference mScreenrecordPowerMenu;
     private SystemCheckBoxPreference mMobileDataPowerMenu;
     private SystemCheckBoxPreference mOnTheGoPowerMenu;
-    private CheckBoxPreference mProfilesPowerMenu;
+    private ListPreference mProfilesPowerMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,10 +73,17 @@ public class MenusSettings extends SettingsPreferenceFragment implements
             prefSet.removePreference(mMobileDataPowerMenu);
         }
 
-        mProfilesPowerMenu = (CheckBoxPreference) prefSet.findPreference(POWER_MENU_PROFILES);
-        mProfilesPowerMenu.setChecked(Settings.System.getInt(resolver,
-                Settings.System.PROFILES_IN_POWER_MENU, 0) == 1);
+        mProfilesPowerMenu = (ListPreference) prefSet.findPreference(POWER_MENU_PROFILES);
         mProfilesPowerMenu.setOnPreferenceChangeListener(this);
+        int mProfileShow = Settings.System.getInt(resolver,
+                Settings.System.PROFILES_IN_POWER_MENU, 1);
+        mProfilesPowerMenu.setValue(String.valueOf(mProfileShow));
+        mProfilesPowerMenu.setSummary(mProfilesPowerMenu.getEntries()[mProfileShow]);
+
+        // Only enable if System Profiles are also enabled
+        boolean enabled = Settings.System.getInt(resolver,
+                Settings.System.SYSTEM_PROFILES_ENABLED, 1) == 1;
+        mProfilesPowerMenu.setEnabled(enabled);
 
         mScreenrecordPowerMenu = (SystemCheckBoxPreference) prefSet.findPreference(POWER_MENU_SCREENRECORD);
         if (!mContext.getResources().getBoolean(com.android.internal.R.bool.config_enableScreenrecordChord)) {
@@ -92,8 +104,11 @@ public class MenusSettings extends SettingsPreferenceFragment implements
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         if (preference == mProfilesPowerMenu) {
-            boolean value = (Boolean) objValue;
-            Settings.System.putInt(resolver, Settings.System.PROFILES_IN_POWER_MENU, value ? 1 : 0);
+            int mProfileShow = Integer.valueOf((String) objValue);
+            int index = mProfilesPowerMenu.findIndexOfValue((String) objValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PROFILES_IN_POWER_MENU, mProfileShow);
+            mProfilesPowerMenu.setSummary(mProfilesPowerMenu.getEntries()[index]);
         } else {
             return false;
         }

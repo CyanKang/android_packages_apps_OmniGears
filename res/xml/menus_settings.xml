@@ -55,11 +55,12 @@
         android:summary="@string/power_menu_toggle_airplane_mode_summary"
         android:defaultValue="true" />
 
-    <CheckBoxPreference
-            android:key="power_menu_profiles"
-            android:title="@string/power_menu_toggle_profiles_title"
-            android:summary="@string/power_menu_toggle_profiles_summary"
-            android:persistent="false"/>
+    <ListPreference
+        android:key="power_menu_profiles"
+        android:title="@string/power_menu_toggle_profiles_title"
+        android:entries="@array/power_menu_profiles_entries"
+        android:entryValues="@array/power_menu_profiles_values"
+        android:persistent="false"/>
 
     <org.omnirom.omnigears.preference.SystemCheckBoxPreference
         android:key="sound_toggles_in_power_menu"

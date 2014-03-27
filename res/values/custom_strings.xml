@@ -466,4 +466,10 @@
 
     <string name="force_show_overflow_menu_title">Show overflow menu</string>
     <string name="force_show_overflow_menu_summary">Force show the three-dot overflow menu in applications. Require restart of application</string>
+
+    <string name="power_menu_profiles_title">Profile switcher</string>
+    <string name="power_menu_profiles_disabled">Disabled</string>
+    <string name="power_menu_profiles_lock">Disabled on lockscreen</string>
+    <string name="power_menu_profiles_all">Always show</string>
+
 </resources>
