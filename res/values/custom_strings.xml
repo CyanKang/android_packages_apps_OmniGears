@@ -407,6 +407,8 @@
     <string name="quick_settings_4_columns">4 columns</string>
     <string name="quick_settings_ribbon">Ribbon mode</string>
     <string name="quick_settings_ribbon_summary">Enable/disable Ribbon tiles on notification panel</string>
+    <string name="title_quick_access_bottom">Show on bottom</string>
+    <string name="summary_quick_access_bottom">Shows the Quick Access ribbon at the bottom instead of the top</string>
     <string name="add">Add</string>
     <string name="quick_settings_title">Quick settings</string>
     <string name="tile_picker_title">Ribbon Tiles</string>

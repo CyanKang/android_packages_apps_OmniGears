@@ -46,6 +46,14 @@
             android:persistent="false"
             android:defaultValue="true" />
 
+    <org.omnirom.omnigears.preference.SystemCheckBoxPreference
+            android:key="qs_quick_access_bottom"
+            android:title="@string/title_quick_access_bottom"
+            android:summary="@string/summary_quick_access_bottom"
+            android:defaultValue="false"
+            android:dependency="quicksettings_ribbon"
+            android:disableDependentsState="true" />
+
     <CheckBoxPreference
             android:key="quicksettings_linked"
             android:dependency="quicksettings_ribbon"
